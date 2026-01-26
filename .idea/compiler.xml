@@ -6,6 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="td-jsp-exercice1" />
         <module name="td-jsp-exercice2" />
       </profile>
     </annotationProcessing>

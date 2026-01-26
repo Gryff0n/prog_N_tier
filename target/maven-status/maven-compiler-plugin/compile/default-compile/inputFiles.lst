@@ -1,0 +1,13 @@
+/home/o22303698@campus.univ-orleans.fr/PNtier/prog_N_tier/src/main/java/facade/exceptions/InformationsSaisiesIncoherentesException.java
+/home/o22303698@campus.univ-orleans.fr/PNtier/prog_N_tier/src/main/java/modele/Utilisateur.java
+/home/o22303698@campus.univ-orleans.fr/PNtier/prog_N_tier/src/main/java/facade/exceptions/MatchClosException.java
+/home/o22303698@campus.univ-orleans.fr/PNtier/prog_N_tier/src/main/java/facade/exceptions/UtilisateurNonAdminException.java
+/home/o22303698@campus.univ-orleans.fr/PNtier/prog_N_tier/src/main/java/facade/exceptions/MontantNegatifOuNulException.java
+/home/o22303698@campus.univ-orleans.fr/PNtier/prog_N_tier/src/main/java/modele/Pari.java
+/home/o22303698@campus.univ-orleans.fr/PNtier/prog_N_tier/src/main/java/facade/FacadeParisStaticImpl.java
+/home/o22303698@campus.univ-orleans.fr/PNtier/prog_N_tier/src/main/java/facade/exceptions/UtilisateurDejaConnecteException.java
+/home/o22303698@campus.univ-orleans.fr/PNtier/prog_N_tier/src/main/java/controleur/ControleurPrincipal.java
+/home/o22303698@campus.univ-orleans.fr/PNtier/prog_N_tier/src/main/java/modele/Match.java
+/home/o22303698@campus.univ-orleans.fr/PNtier/prog_N_tier/src/main/java/facade/FacadeParis.java
+/home/o22303698@campus.univ-orleans.fr/PNtier/prog_N_tier/src/main/java/facade/exceptions/OperationNonAuthoriseeException.java
+/home/o22303698@campus.univ-orleans.fr/PNtier/prog_N_tier/src/main/java/facade/exceptions/ResultatImpossibleException.java
