@@ -1,93 +1,99 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
+
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
     <title>Mes Paris - PEL</title>
-    <!--<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css"> -->
 </head>
 <body>
-<div class="container">
-    <header>
-        <h1>PEL - Paris En Ligne</h1>
-        <div class="user-info">
-            <p>Connecté : <strong>${sessionScope.utilisateurConnecte}</strong></p>
-            <a href="controleur?action=menu" class="btn-secondary">Retour au menu</a>
-        </div>
-    </header>
 
-    <main>
-        <div class="content-box">
-            <h2>Mes paris</h2>
+<jsp:useBean id="utilisateur" type="modele.Utilisateur" scope="session"/>
+<jsp:useBean id="mesParis" type="java.util.Collection" scope="request"/>
 
-            <div class="bets-list">
-                <h3>Paris en cours</h3>
+<h1>PEL - Paris En Ligne</h1>
+<p>Connecté en tant que <strong>${utilisateur.login}</strong></p>
 
-                <div class="bet-item active">
-                    <div class="bet-header">
-                        <span class="bet-id">Pari #1</span>
-                        <span class="bet-status status-active">En cours</span>
-                    </div>
-                    <div class="bet-content">
-                        <p><strong>Match :</strong> France vs Allemagne</p>
-                        <p><strong>Sport :</strong> ⚽ Football</p>
-                        <p><strong>Date du match :</strong> 15/03/2025 à 21h00</p>
-                        <p><strong>Pronostic :</strong> France (Équipe 1)</p>
-                        <p><strong>Mise :</strong> 10.00 €</p>
-                    </div>
-                </div>
+<a href="${pageContext.request.contextPath}/pel/menu">Menu</a> |
+<a href="${pageContext.request.contextPath}/pel/deconnexion">Déconnexion</a>
 
-                <div class="bet-item active">
-                    <div class="bet-header">
-                        <span class="bet-id">Pari #2</span>
-                        <span class="bet-status status-active">En cours</span>
-                    </div>
-                    <div class="bet-content">
-                        <p><strong>Match :</strong> Lakers vs Celtics</p>
-                        <p><strong>Sport :</strong> 🏀 Basketball</p>
-                        <p><strong>Date du match :</strong> 17/03/2025 à 19h30</p>
-                        <p><strong>Pronostic :</strong> Lakers (Équipe 1)</p>
-                        <p><strong>Mise :</strong> 25.00 €</p>
-                    </div>
-                </div>
+<hr>
 
-                <h3>Paris terminés</h3>
+<h2>Mes paris</h2>
 
-                <div class="bet-item finished won">
-                    <div class="bet-header">
-                        <span class="bet-id">Pari #3</span>
-                        <span class="bet-status status-won">Gagné 🎉</span>
-                    </div>
-                    <div class="bet-content">
-                        <p><strong>Match :</strong> PSG vs OM</p>
-                        <p><strong>Sport :</strong> ⚽ Football</p>
-                        <p><strong>Date du match :</strong> 10/03/2025</p>
-                        <p><strong>Pronostic :</strong> PSG (Équipe 1)</p>
-                        <p><strong>Mise :</strong> 15.00 €</p>
-                        <p><strong>Gain :</strong> <span class="gain">28.50 €</span></p>
-                    </div>
-                </div>
+<c:if test="${empty mesParis}">
+    <p>Aucun pari effectué.</p>
+    <a href="${pageContext.request.contextPath}/pel/matchsOuverts">Parier</a>
+</c:if>
 
-                <div class="bet-item finished lost">
-                    <div class="bet-header">
-                        <span class="bet-id">Pari #4</span>
-                        <span class="bet-status status-lost">Perdu</span>
-                    </div>
-                    <div class="bet-content">
-                        <p><strong>Match :</strong> Real Madrid vs Barcelona</p>
-                        <p><strong>Sport :</strong> ⚽ Football</p>
-                        <p><strong>Date du match :</strong> 08/03/2025</p>
-                        <p><strong>Pronostic :</strong> Match nul</p>
-                        <p><strong>Mise :</strong> 20.00 €</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
+<c:forEach var="pari" items="${mesParis}">
+    <hr>
 
-    <footer>
-        <p>&copy; 2024 PEL - Paris En Ligne</p>
-    </footer>
-</div>
+    <h3>
+            ${pari.match.equipe1} VS ${pari.match.equipe2}
+    </h3>
+
+    <p>
+        <strong>Sport :</strong>
+        <c:choose>
+            <c:when test="${pari.match.sport == 'foot'}">⚽ Football</c:when>
+            <c:when test="${pari.match.sport == 'rugby'}">🏉 Rugby</c:when>
+            <c:when test="${pari.match.sport == 'basket'}">🏀 Basketball</c:when>
+            <c:when test="${pari.match.sport == 'tennis'}">🎾 Tennis</c:when>
+            <c:otherwise>${pari.match.sport}</c:otherwise>
+        </c:choose>
+    </p>
+
+    <p>
+        <strong>Date :</strong>
+        <fmt:parseDate value="${pari.match.quand}" pattern="yyyy-MM-dd'T'HH:mm" var="d"/>
+        <fmt:formatDate value="${d}" pattern="dd/MM/yyyy HH:mm"/>
+    </p>
+
+    <p><strong>Pronostic :</strong> ${pari.vainqueur}</p>
+    <p><strong>Mise :</strong> ${pari.montant} €</p>
+
+    <!-- PARI EN COURS -->
+    <c:if test="${!pari.match.commenceOuFini}">
+        <p><strong>Statut :</strong> En cours</p>
+        <a href="${pageContext.request.contextPath}/pel/annulerPari?idPari=${pari.idPari}"
+           onclick="return confirm('Annuler ce pari ?');">
+            Annuler
+        </a>
+    </c:if>
+
+    <!-- PARI TERMINÉ -->
+    <c:if test="${pari.match.commenceOuFini}">
+        <p><strong>Statut :</strong>
+            <c:choose>
+                <c:when test="${pari.gain.present && pari.gain.get() > 0}">
+                    ✅ Gagné
+                </c:when>
+                <c:when test="${pari.match.resultat.present}">
+                    ❌ Perdu
+                </c:when>
+                <c:otherwise>
+                    ⏳ En attente
+                </c:otherwise>
+            </c:choose>
+        </p>
+
+        <c:if test="${pari.match.resultat.present}">
+            <p><strong>Résultat :</strong> ${pari.match.resultat.get()}</p>
+        </c:if>
+
+        <c:if test="${pari.gain.present}">
+            <p><strong>Gain :</strong>
+                <fmt:formatNumber value="${pari.gain.get()}" pattern="#0.00"/> €
+            </p>
+        </c:if>
+    </c:if>
+
+</c:forEach>
+
+<hr>
+<p>&copy; 2024 PEL</p>
+
 </body>
 </html>

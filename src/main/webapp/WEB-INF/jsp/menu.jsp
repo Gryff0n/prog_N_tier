@@ -13,7 +13,7 @@
     <jsp:useBean id="utilisateur" type="modele.Utilisateur" scope="session"></jsp:useBean>
     <div class="user-info">
       <p>Connecté en tant que : <strong>${utilisateur.login}</strong></p>
-      <a href="/pel/mesParis" class="btn-secondary">Déconnexion</a>
+      <a href="${pageContext.request.contextPath}/pel/deconnexion" class="btn-secondary">Déconnexion</a>
     </div>
   </header>
 
@@ -24,7 +24,13 @@
       <nav class="menu-navigation">
         <ul>
           <li>
-            <a href="/pel" class="menu-link">
+            <a href="${pageContext.request.contextPath}/pel/matchsOuverts" class="menu-link">
+              <span class="menu-icon">⚽</span>
+              <span class="menu-text">Parier sur un match</span>
+            </a>
+          </li>
+          <li>
+            <a href="${pageContext.request.contextPath}/pel/mesParis" class="menu-link">
               <span class="menu-icon">📋</span>
               <span class="menu-text">Gérer mes paris</span>
             </a>
